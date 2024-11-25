@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Перемещение элементов</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .draggable {
+            width: 200px;
+            height: 200px;
+            background-color: #4CAF50;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            cursor: grab;
+        }
+        .draggable:active {
+            cursor: grabbing;
+        }
+    </style>
+</head>
+<body>
+    <div class="draggable" id="draggable">Перетащи меня</div>
+
+    <script>
+        const draggable = document.getElementById('draggable');
+
+        draggable.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+
+            let shiftX = e.clientX - draggable.getBoundingClientRect().left;
+            let shiftY = e.clientY - draggable.getBoundingClientRect().top;
+
+            function moveAt(pageX, pageY) {
+                draggable.style.left = pageX - shiftX + 'px';
+                draggable.style.top = pageY - shiftY + 'px';
+            }
+
+            function onMouseMove(event) {
+                moveAt(event.pageX, event.pageY);
+            }
+
+            document.addEventListener('mousemove', onMouseMove);
+
+            document.addEventListener('mouseup', () => {
+                document.removeEventListener('mousemove', onMouseMove);
+            }, { once: true });
+        });
+
+        draggable.ondragstart = () => {
+            return false;
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	overflow: hidden;
+	height: 100vh; /* Обязательно задаем высоту и ширину */
+	width: 100vw;
+	background-image: url("image/background_math.png");
+}
+.container {
+	width: 5000px; /* Ширина контейнера больше размера экрана */
+	height: 5000px; /* Высота контейнера больше размера экрана */
+	position: relative;
+}
+.object {
+	width: 200px;
+	height: 200px;
+	color: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	border-radius: 15%;
+	
+}
+.object_1 {
+	background-color: #dddddd;
+	top: 2500px;
+	left: 2500px;
+	font-size: 30px;
+}
+.object_2 {
+	background-color: #999999;
+	top: 3000px;
+	left: 3000px;
+	font-size: 26px;
+}
+.object_3 {
+	background-color: #999999;
+	top: 2000px;
+	left: 2000px;
+	font-size: 26px;
+}
+
+
+
+
+
+.object .tooltiptext {
+	visibility: hidden;
+	width: 150px;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px;
+	position: absolute;
+	z-index: 1;
+	top: 50%;
+	transform: translateY(-50%);
+	opacity: 0;
+	transition: opacity 0.3s;
+}
+
+.object:hover .tooltiptext {
+	visibility: visible;
+	opacity: 1;
+}

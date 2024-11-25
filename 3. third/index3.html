@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Майндкарта по математике</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            overflow: hidden;
+            height: 100vh; 
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            width: 3000px;
+            height: 3000px;
+            position: relative;
+        }
+        .object {
+            width: 150px;
+            height: 150px;
+            background-color: #4CAF50;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            border-radius: 50%;
+            text-align: center;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .central {
+            width: 300px;
+            height: 300px;
+            background-color: #FF5722;
+            left: 50%; 
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .line {
+            position: absolute;
+            background-color: black;
+            width: 2px;
+            transform-origin: top left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="object central" id="central">Математика</div>
+        <!-- Дочерние объекты будут добавлены здесь -->
+    </div>
+	<script>
+    const container = document.getElementById('container');
+
+    const subjects = [
+        'Алгебра', 'Геометрия', 'Тригонометрия', 
+        'Калькулятор', 'Логарифмы', 'Функции', 'Графики'
+    ];
+
+    const centralObject = document.getElementById('central');
+    const centralRect = centralObject.getBoundingClientRect();
+    const centralX = container.clientWidth / 2;
+    const centralY = container.clientHeight / 2;
+    const radius = 500;
+
+    subjects.forEach((subject, index) => {
+        const angle = (index / subjects.length) * (2 * Math.PI);
+        const x = centralX + radius * Math.cos(angle);
+        const y = centralY + radius * Math.sin(angle);
+
+        const object = document.createElement('div');
+        object.className = 'object';
+        object.style.left = `${x - 75}px`; // 75 - половина ширины объекта
+        object.style.top = `${y - 75}px`; // 75 - половина высоты объекта
+        object.innerText = subject;
+        container.appendChild(object);
+
+        // Добавляем линии
+        const line = document.createElement('div');
+        line.className = 'line';
+        const length = Math.sqrt(Math.pow(x - centralX, 2) + Math.pow(y - centralY, 2));
+        line.style.height = `${length}px`;
+        const angleDeg = Math.atan2(y - centralY, x - centralX) * 180 / Math.PI;
+        line.style.transform = `rotate(${angleDeg}deg)`;
+        line.style.left = `${centralX}px`;
+        line.style.top = `${centralY}px`;
+        container.appendChild(line);
+    });
+
+    let isDragging = false;
+    let startX, startY;
+
+    container.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        container.style.cursor = 'grabbing';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+            window.scrollBy(-dx, -dy);
+            startX = e.clientX;
+            startY = e.clientY;
+        }
+    });
+
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+        container.style.cursor = 'default';
+    });
+
+    container.addEventListener('mouseleave', () => {
+        isDragging = false;
+        container.style.cursor = 'default';
+    });
+</script>
+
+</body>
+</html>

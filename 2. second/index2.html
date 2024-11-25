@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Перемещение поля</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            overflow: hidden;
+        }
+        .container {
+            width: 3000px; /* Ширина контейнера больше размера экрана */
+            height: 3000px; /* Высота контейнера больше размера экрана */
+            position: relative;
+        }
+        .object {
+            width: 200px;
+            height: 200px;
+            background-color: #4CAF50;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+        }
+        .object.one {
+            top: 100px;
+            left: 100px;
+        }
+        .object.two {
+            top: 100px;
+            left: 400px;
+        }
+        .object.three {
+            top: 400px;
+            left: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="object one">Объект 1</div>
+        <div class="object two">Объект 2</div>
+        <div class="object three">Объект 3</div>
+    </div>
+
+    <script>
+        const container = document.getElementById('container');
+        let isDragging = false;
+        let startX, startY;
+
+        container.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            container.style.cursor = 'grabbing';
+        });
+
+        container.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+                window.scrollBy(-dx, -dy);
+                startX = e.clientX;
+                startY = e.clientY;
+            }
+        });
+
+        container.addEventListener('mouseup', () => {
+            isDragging = false;
+            container.style.cursor = 'default';
+        });
+
+        container.addEventListener('mouseleave', () => {
+            isDragging = false;
+            container.style.cursor = 'default';
+        });
+    </script>
+</body>
+</html>

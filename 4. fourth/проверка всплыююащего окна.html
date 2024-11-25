@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+		.container {
+			width: 5000px; /* Ширина контейнера больше размера экрана */
+			height: 5000px; /* Высота контейнера больше размера экрана */
+			position: relative;
+		}
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 150px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+		.tooltip {
+			background-color: #dddddd;
+			top: 2500px;
+			left: 2500px;
+			font-size: 30px;
+		}
+    </style>
+</head>
+<body>
+<div class="container" id="container">
+<div class="tooltip" id="tooltip">Наведи на меня
+    <span class="tooltiptext" id="tooltiptext">Это всплывающая надпись!</span>
+</div>
+</div>
+<script src="move_screen.js"></script>
+<script>
+    const tooltip = document.getElementById('tooltip');
+    const tooltipText = document.getElementById('tooltiptext');
+
+    tooltip.addEventListener('mouseover', (event) => {
+        const tooltipRect = tooltip.getBoundingClientRect();
+        const viewportWidth = window.innerWidth;
+        const halfViewportWidth = viewportWidth / 2;
+
+        if (tooltipRect.left < halfViewportWidth) {
+            // Если элемент находится в левой половине окна
+            tooltipText.textContent = 'Это всплывающая надпись слева!';
+            tooltipText.style.left = '125%';
+            tooltipText.style.right = 'auto';
+        } else {
+            // Если элемент находится в правой половине окна
+            tooltipText.textContent = 'Это всплывающая надпись справа!';
+            tooltipText.style.left = 'auto';
+            tooltipText.style.right = '125%';
+        }
+    });
+</script>
+
+</body>
+</html>
